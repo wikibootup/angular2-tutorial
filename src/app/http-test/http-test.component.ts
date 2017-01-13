@@ -1,25 +1,29 @@
 import { Component, OnInit } from '@angular/core';
-import { Http } from '@angular/http';
-import 'rxjs/add/operator/map';
+import { HttpTestService } from '../http-test.service';
 
 @Component({
   selector: 'app-http-test',
   template: `
-    <button (click)="req()">button</button>
-    {{getData}}
-  `
+    <button (click)="onTestGet()">button</button>
+    <p>{{getData}}</p>
+  `,
+  providers: [HttpTestService]
 })
 export class HttpTestComponent implements OnInit {
 
-  getData;
+  getData: string;
 
-  constructor(private http: Http) { }
+  constructor(private _httpService: HttpTestService) { }
 
   ngOnInit() {
   }
 
-  req() {
-    this.getData = this.http.get('http://data.jsontest.com').
-      map(res => res.json());
+  onTestGet() {
+    this._httpService.getCurrentTime()
+      .subscribe(
+        data => this.getData = JSON.stringify(data),
+        error => alert(error),
+        () => console.log("Finished")
+      );
   } 
 }

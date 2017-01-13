@@ -1,15 +1,25 @@
 import { Component, OnInit } from '@angular/core';
+import { Http } from '@angular/http';
+import 'rxjs/add/operator/map';
 
 @Component({
   selector: 'app-http-test',
-  templateUrl: './http-test.component.html',
-  styleUrls: ['./http-test.component.css']
+  template: `
+    <button (click)="req()">button</button>
+    {{getData}}
+  `
 })
 export class HttpTestComponent implements OnInit {
 
-  constructor() { }
+  getData;
+
+  constructor(private http: Http) { }
 
   ngOnInit() {
   }
 
+  req() {
+    this.getData = this.http.get('http://data.jsontest.com').
+      map(res => res.json());
+  } 
 }

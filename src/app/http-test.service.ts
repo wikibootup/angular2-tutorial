@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 @Injectable()
@@ -13,7 +13,8 @@ export class HttpTestService {
   }
 
   requestGet(url: string) {
-    return this.http.get(url)
+    var header = new Headers();
+    return this.http.get(url, {headers: header})
       .map(res => res.json());
   }
 

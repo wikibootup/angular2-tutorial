@@ -5,13 +5,13 @@ import { HttpTestService } from '../http-test.service';
   selector: 'app-http-test',
   template: `
     <button (click)="onTestGet()">button</button>
-    <p>{{getData}}</p>
+    <p>{{getCurTimeData}}</p>
   `,
   providers: [HttpTestService]
 })
 export class HttpTestComponent implements OnInit {
 
-  getData: string;
+  getCurTimeData: string;
 
   constructor(private _httpService: HttpTestService) { }
 
@@ -21,7 +21,7 @@ export class HttpTestComponent implements OnInit {
   onTestGet() {
     this._httpService.getCurrentTime()
       .subscribe(
-        data => this.getData = JSON.stringify(data),
+        data => this.getCurTimeData = JSON.stringify(data),
         error => alert(error),
         () => console.log("Finished")
       );
